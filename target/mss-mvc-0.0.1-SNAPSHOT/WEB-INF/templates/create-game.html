@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>test only</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<p>创建比赛</p>
+<div>
+    <form name="gameInfo" action="/setRules/ruleSetting" method="post">
+        比赛名称: <input type="text" id="gameName" name="name" required="required">
+        选择运动项目： <select id="gameType" name="type" required="required">
+        <option value="">请选择</option>
+        <option value="basketball">篮球</option>
+        <option value="volleyball">排球</option>
+        <option value="pingpong">乒乓球</option>
+        <option value="pool">台球</option>
+        <option value="tennis">网球</option>
+        <option value="badminton">羽毛球</option>
+        <option value="football">足球</option>
+    </select>
+
+    <table class="table table-striped">
+<!--        <tr>-->
+<!--            <th>比赛名称：</th> <td th:text="${game.name}"></td>-->
+<!--        </tr>-->
+    </table>
+        <input type="submit" value="设置规则">
+    </form>
+</div>
+</body>
+</html>

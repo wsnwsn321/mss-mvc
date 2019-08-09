@@ -1,0 +1,172 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>test only</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<p>设置规则</p>
+<div>
+    <form name="gameInfo" action="/cary/test" method="post">
+         <div>
+            选择胜利条件:
+            <p><input type="radio" id="time" name="gameMode" value=1 required="required"/>一定时间内，得分高方获胜</p></br>
+            <p><input type="radio" id="score" name="gameMode" value=2 /> 一定得分数，先达到方获胜</p>
+                 <dl id ="timeBased" style="display:none">
+                     <dt>比赛节数：<input type="number" id="timeSetNumber" name="timeSetNumber" required="required"></dt>
+                     <dt>每节时长(分钟)：<input type="number" id="timePerSet" name="timePerSet"  required="required"></dt>
+                 </dl>
+                 <dl id ="scoreBased" style="display:none">
+                     <dt>比赛局数：<input type="number" id="scoreSetNumber" name="scoreSetNumber" required="required"></dt>
+                     <dt>每局比分：<input type="number" id="scorePerSet" name="scorePerSet" required="required"></dt>
+                 </dl>
+             </div>
+         <br>
+             <div>
+                 犯规设置：</br>
+                 是否记录队员犯规：
+                 <input type="radio" id="setFoul" name="isSetFoul" value=1 required="required"/>是
+                 <input type="radio" id="notSetFoul" name="isSetFoul" value=0 /> 否
+                 <dl id ="showFoul" style="display:none">
+                     <dt>个人犯规上限：<input type="number" id ="foulLimit" name="foulLimit" ></dt>
+                 </dl>
+             </div>
+         <br>
+             <div>
+                 得分记录设置：</br>
+                 是否记录队员个人得分：
+                 <input type="radio" id="setPersonalScore" name="isRecordPlayerScore" value=1 required="required"/>是
+                 <input type="radio" id="notSetPersonalScore" name="isRecordPlayerScore" value=0 /> 否
+             </div>
+         <br>
+             <div>
+                 人员替换设置：</br>
+                 是否允许人员替换：
+                 <input type="radio" id="sub" name="isAllowSubstitution" value=1 required="required"/>是
+                 <input type="radio" id="notSub" name="isAllowSubstitution" value=0 /> 否
+                 <dl id ="showSub" style="display:none">
+                     <dt>人员替换设置上限：<input type="number" id ="substitutionLimit" name="substitutionLimit" ></dt>
+                     <dt>替补队员上限：<input type="number" id ="benchPlayerLimit" name="benchPlayerLimit" ></dt>
+                 </dl>
+             </div>
+             <br>
+             <div>
+                 暂停设置：</br>
+                 是否允许暂停：
+                 <input type="radio" id="setTimeout" name="isAllowTimeout" value=1 required="required"/>是
+                 <input type="radio" id="notSetTimeout" name="isAllowTimeout" value=0 /> 否
+                 <dl id ="showTimeout" style="display:none">
+                     <dt>暂停次数上限：<input type="number" id ="timeoutLimit" name="timeoutLimit" ></dt>
+                 </dl>
+             </div>
+        <br>
+        <div>
+            加时赛设定：</br>
+            是否设定加时赛：
+            <input type="radio" id="setOvertime" name="isAllowOvertime" value=1 required="required"/>是
+            <input type="radio" id="notSetOvertime" name="isAllowOvertime" value=0 /> 否
+            <dl id ="showOGameMode" style="display:none">
+                <p><input type="radio" id="otime" name="overtimeGameMode" value=1 />一定时间内，得分高方获胜</p></br>
+                <p><input type="radio" id="oscore" name="overtimeGameMode" value=2 /> 一定得分数，先达到方获胜</p>
+            <dl id ="overtimeTimeBased" style="display:none">
+                <dt>加时赛比赛节数：<input type="number" id="overtimeTimeSetNumber" name="overtimeTimeSetNumber" ></dt>
+                <dt>加时赛每节时长(分)：<input type="number" id="overtimeTimePerSet" name="overtimeTimePerSet"  ></dt>
+            </dl>
+            <dl id ="overtimeScoreBased" style="display:none">
+                <dt>加时赛比赛局数：<input type="number" id="overtimeScoreSetNumber" name="overtimeScoreSetNumber"></dt>
+                <dt>加时赛每局比分：<input type="number" id="overtimeScorePerSet" name="overtimeScorePerSet" ></dt>
+            </dl>
+            </dl>
+        </div>
+        <input type="submit" value="完成">
+    </form>
+</div>
+</body>
+<script type="text/javascript" src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        $('input[type=radio][name=gameMode]').change(function() {
+            if (this.value == 1) {
+                document.getElementById("timeBased").style.display='block';
+                document.getElementById("scoreBased").style.display='none';
+                document.getElementById("timeSetNumber").required="required";
+                document.getElementById("timePerSet").required="required";
+                document.getElementById("scoreSetNumber").value = 0;
+                document.getElementById("scorePerSet").value = 0;
+            }
+            else if (this.value == 2) {
+                document.getElementById("timeBased").style.display='none';
+                document.getElementById("scoreBased").style.display='block';
+                document.getElementById("scoreSetNumber").required="required";
+                document.getElementById("scorePerSet").required="required";
+                document.getElementById("timeSetNumber").value = 0;
+                document.getElementById("timePerSet").value = 0;
+            }
+        });
+        $('input[type=radio][name=isSetFoul]').change(function() {
+            if (this.value == 1) {
+                document.getElementById("showFoul").style.display='block';
+                document.getElementById("foulLimit").required="required";
+            }
+            else if (this.value == 0) {
+                document.getElementById("showFoul").style.display='none';
+                document.getElementById("foulLimit").value = 0;
+            }
+        });
+        $('input[type=radio][name=isAllowSubstitution]').change(function() {
+            if (this.value == 1) {
+                document.getElementById("substitutionLimit").required="required";
+                document.getElementById("benchPlayerLimit").required="required";
+                document.getElementById("showSub").style.display='block';
+            }
+            else if (this.value == 0) {
+                document.getElementById("showSub").style.display='none';
+                document.getElementById("substitutionLimit").value = 0;
+                document.getElementById("benchPlayerLimit").value = 0;
+            }
+        });
+        $('input[type=radio][name=isAllowTimeout]').change(function() {
+            if (this.value == 1) {
+                document.getElementById("showTimeout").style.display='block';
+                document.getElementById("timeoutLimit").required="required";
+            }
+            else if (this.value == 0) {
+                document.getElementById("showTimeout").style.display='none';
+                document.getElementById("timeoutLimit").value = 0;
+            }
+        });
+
+        $('input[type=radio][name=isAllowOvertime]').change(function() {
+            if (this.value == 1) {
+                document.getElementById("showOGameMode").style.display='block';
+                $('input[type=radio][name=overtimeGameMode]').change(function() {
+                    if (this.value == 1) {
+                        document.getElementById("overtimeTimeBased").style.display='block';
+                        document.getElementById("overtimeScoreBased").style.display='none';
+                        document.getElementById("overtimeTimeSetNumber").required="required";
+                        document.getElementById("overtimeTimePerSet").required="required";
+                        document.getElementById("overtimeScoreSetNumber").value = 0;
+                        document.getElementById("overtimeScorePerSet").value = 0;
+                    }
+                    else if (this.value == 2) {
+                        document.getElementById("overtimeTimeBased").style.display='none';
+                        document.getElementById("overtimeScoreBased").style.display='block';
+                        document.getElementById("overtimeScoreSetNumber").required="required";
+                        document.getElementById("overtimeScorePerSet").required="required";
+                        document.getElementById("overtimeTimeSetNumber").value = 0;
+                        document.getElementById("overtimeTimePerSet").value = 0;
+                    }
+                });
+            }
+            else if (this.value == 0) {
+                document.getElementById("showOGameMode").style.display='none';
+                document.getElementById("overtimeScoreSetNumber").value = 0;
+                document.getElementById("overtimeScorePerSet").value = 0;
+                document.getElementById("overtimeTimeSetNumber").value = 0;
+                document.getElementById("overtimeTimePerSet").value = 0;
+            }
+        });
+
+    }
+</script>
+</html>
